@@ -1,0 +1,131 @@
+<script>
+
+  class Submitter {
+    constructor(){
+      this.iframeLoaded = false;
+      this.activePage = 'consent';
+    }
+  }
+
+  var formConsent = $(`<input type="hidden" name="__userinfo_cs_version" value="v3.11.2-v3-frontend">
+<input type="hidden" name="question.2018-06-11.0696472112-radiosubquestion" value="__deselected_radio_group">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-06-11.0696472112-radiosubquestion-0" value="Yes" name="question.2018-06-11.0696472112-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-06-11.0696472112-radiosubquestion-1" value="No" name="question.2018-06-11.0696472112-radiosubquestion" checked="checked">
+<textarea name="question.2018-06-11.1859110439-textareasubquestion" id="question.2018-06-11.1859110439-textareasubquestion" class="form-control" data-test-hook="subquestion-textarea" rows="5"></textarea>
+<input type="hidden" name="question.2018-06-11.0820412936-booleansubquestion" value="no">
+<input type="checkbox" data-test-hook="subquestion-boolean" value="yes" name="question.2018-06-11.0820412936-booleansubquestion" id="question.2018-06-11.0820412936-booleansubquestion">
+<input type="hidden" name="form.submitted" value="1">
+<input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-06-11.0090277436/">
+<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" ontouchstart="">
+Continue <span class="fa fa-angle-right icon-space-left"></span>
+</button>`).html();
+  
+  
+  $(document).ready(function() {
+
+    var submit = new Submitter;
+    var iframeLoads = 0;
+    var iframeSubmitting = false;
+    var nextPageUri;
+
+    var uriBase = 'https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation';
+    var pages = [
+      {
+        name: 'consent',
+        dfeTarget: 'subpage.2018-06-11.0090277436',
+        identifier: 'survey-question-id-10',
+        nextPage: 'personalDetails',
+        formHTML: formConsent
+      },
+      {
+        name: 'personalDetails',
+        dfeTarget: 'intro',
+        identifier: 'survey-question-id-10'
+      }
+    ];
+
+    var pagesHash = {
+      consent: {
+        name: 'consent',
+        dfeTarget: 'subpage.2018-06-11.0090277436',
+        identifier: 'survey-question-id-10',
+        nextPage: 'personalDetails'
+      },
+      personalDetails: {
+        name: 'personalDetails',
+        dfeTarget: 'intro',
+        identifier: 'survey-question-id-10'
+      }
+    };
+
+    /** Load DfE consulation into iframe*/
+    $('<iframe ' +
+      'id="dfe" ' +
+      'name="dfe" ' +
+      'style="visibility: visible; height: 600px; width: 90%; margin: 5%;"' +
+      `src="${uriBase}/${pages[0].dfeTarget}/">` +
+      '</iframe>').on('load', function(){
+        iframeLoads += 1;
+        console.log(iframeLoads);
+        if (iframeSubmitting) {
+          iframeSubmitting = false;
+          $('#dfe').attr('src', `${uriBase}/${nextPageUri}/`);
+        }
+      }).appendTo('#heading-container');
+
+
+    /** Generate hidden forms */
+    $(formGenerator(pages[0], uriBase, pagesHash)).appendTo('#heading-container');
+
+
+    $('a.js-next-block').click(function(e) {
+      /** Get active question ID */
+      var questionIds = $(e.target)
+        .closest('form#survey-form')
+        .find('div.question-block:visible')
+        .find('.question')
+        .map(function(){return this.id}).get();
+
+      /** Post active form page to DfE iframe  */
+      var activePage = pages.filter(function(p) {
+        return questionIds.includes(p.identifier);
+      })[0];
+
+      if (activePage) {
+        console.log(`about to post form to ${activePage.dfeTarget}`);
+        // var form = $(`#${activePage.name}-form`);
+        // $(`#${activePage.name}`).trigger('click');
+        iframeSubmitting = true;
+        nextPageUri = pagesHash[activePage.nextPage].dfeTarget;
+        $(`#${activePage.name}-form`).submit();
+      }
+      //TODO: trigger target is dependent on active question block
+    });
+
+
+  });
+
+  function formGenerator(page, uriBase, pagesHash) {
+    return $(`<form enctype="multipart/form-data" id="${page.name}-form"
+      action="${uriBase}/${page.dfeTarget}/" target="dfe" method="post" style="visibility: hidden; height: 0;">
+      ${page.formHTML}</form>`)
+      // .submit(function(){
+      //   console.log('changing iframe src...');
+      // setTimeout(function(){
+      //   $('#dfe').attr('src', `${uriBase}/${pagesHash[page.nextPage].dfeTarget}/`);
+      // }, 5000);
+    // });
+  }
+
+
+
+</script>
+
+
+<style>
+#taker-details .form-group-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+</style>
