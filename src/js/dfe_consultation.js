@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 $(document).ready(function() {
 
   var dfeFormConsent = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.2-v3-frontend">
@@ -212,6 +213,8 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
           break;
         case 'textarea':
           var content =  $(`textarea[name='${link.speakoutName}']`).val();
+          console.log(link);
+          console.log(content);
           $('#' + escapeSelector(link.targetId)).val(content);
           break;
         default:
