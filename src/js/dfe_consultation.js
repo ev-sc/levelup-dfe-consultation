@@ -1,5 +1,14 @@
 $(document).ready(function() {
 
+  String.prototype.escapeSelector = function () {
+    // noinspection RegExpRedundantEscape
+    return this.replace(
+      // eslint-disable-next-line no-useless-escape
+      /([$%&()*+,./:;<=>?@\[\\\]^\{|}~])/g,
+      '\\$1'
+    );
+  };
+
   var dfeFormConsent = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.2-v3-frontend">
 <input type="hidden" name="question.2018-06-11.0696472112-radiosubquestion" value="__deselected_radio_group">
 <input type="radio" data-test-hook="subquestion-radio" id="question.2018-06-11.0696472112-radiosubquestion-0" value="Yes" name="question.2018-06-11.0696472112-radiosubquestion">
@@ -225,12 +234,3 @@ function formGenerator(page, uriBase) {
       action="${uriBase}/${page.dfeTarget}/" target="dfe" method="post" style="visibility: visible; height: 400px;">` +
       page.formHTML + '</form>');
 }
-
-String.prototype.escapeSelector = function () {
-  // noinspection RegExpRedundantEscape
-  return this.replace(
-    // eslint-disable-next-line no-useless-escape
-    /([$%&()*+,./:;<=>?@\[\\\]^\{|}~])/g,
-    '\\$1'
-  );
-};
