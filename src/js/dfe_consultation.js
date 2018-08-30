@@ -199,8 +199,8 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
           var checked = $(`input[name='${link.speakoutName}']:checked`);
           if (checked.length !== 0) {
             console.log(checked);
-            console.log(link.targets[selected]);
             var selected = checked.val();
+            console.log(link.targets[selected]);
             // $(link.targets[selected]).prop( 'checked' ).attr( 'checked' );
           }
           break;
