@@ -198,11 +198,11 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
         case 'checkbox':
           var checked = $(`input[name='${link.speakoutName}']:checked`);
           if (checked.length !== 0) {
+            console.log(checked);
+            console.log(link.targets[selected]);
             var selected = checked.val();
             $(link.targets[selected]).prop( 'checked' ).attr( 'checked' );
           }
-          console.log(checked);
-          console.log(checked.val());
           break;
         case 'textarea':
           break;
