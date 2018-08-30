@@ -189,25 +189,26 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
       .map(function(){return this.id;}).get();
     var doSubmit = SpeakoutQuestionIds.includes(page.identifier);
 
-    /** Load Speakout survey data into hidden form */
-    page.linking.forEach(function(link){
-      switch(link.type) {
-      case 'checkbox':
-        var checked = $(`input[name=${link.speakoutName}]:checked`);
-        console.log(checked);
-        console.log(checked.val());
-        break;
-      case 'textarea':
-        break;
-      default:
-        break;
-      }
-    });
 
     /** Submit hidden form to DfE iframe  */
     if (page && doSubmit) {
-      iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
-      $(`#${page.name}-form`).submit();
+      /** Load Speakout survey data into hidden form */
+      page.linking.forEach(function(link){
+        switch(link.type) {
+        case 'checkbox':
+          var checked = $(`input[name="${link.speakoutName}"]:checked`);
+          console.log(checked);
+          console.log(checked.val());
+          break;
+        case 'textarea':
+          break;
+        default:
+          break;
+        }
+      });
+
+      // iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
+      // $(`#${page.name}-form`).submit();
     }
   });
 
