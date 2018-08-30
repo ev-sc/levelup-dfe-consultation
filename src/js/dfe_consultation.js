@@ -202,8 +202,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
             var selected = checked.val();
             console.log(link.targets[selected]);
             console.log($(link.targets[selected]));
-            $(link.targets[selected]).prop( 'checked', true );
-            $(link.targets[selected]).attr( 'checked', 'checked' );
+            $($.escapeSelector(link.targets[selected])).prop( 'checked', true ).attr( 'checked', 'checked' );
           }
           break;
         case 'textarea':
