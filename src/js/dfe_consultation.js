@@ -120,7 +120,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
       formHTML: dfeFormConsent,
       linking: [
         {
-          speakoutId: 'survey-question-id-10',
+          speakoutName: 'q[10]',
           type: 'checkbox',
           values: {
             Yes: 'question.2018-06-11.0696472112-radiosubquestion-0',
@@ -128,7 +128,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
           }
         },
         {
-          speakoutId: 'survey-question-id-13',
+          speakoutName: 'q[13]',
           type: 'textarea',
           target: 'question.2018-06-11.1859110439-textareasubquestion'
         }
@@ -193,8 +193,9 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
     page.linking.forEach(function(link){
       switch(link.type) {
       case 'checkbox':
-        var checked = $(`#${link.speakoutId}.input:checked`);
+        var checked = $(`input[name=${link.speakoutName}]:checked`);
         console.log(checked);
+        console.log(checked.val());
         break;
       case 'textarea':
         break;
