@@ -1,5 +1,7 @@
+$(document).ready(function() {
 
-var dfeFormConsent = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.2-v3-frontend">
+
+  var dfeFormConsent = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.2-v3-frontend">
 <input type="hidden" name="question.2018-06-11.0696472112-radiosubquestion" value="__deselected_radio_group">
 <input type="radio" data-test-hook="subquestion-radio" id="question.2018-06-11.0696472112-radiosubquestion-0" value="Yes" name="question.2018-06-11.0696472112-radiosubquestion">
 <input type="radio" data-test-hook="subquestion-radio" id="question.2018-06-11.0696472112-radiosubquestion-1" value="No" name="question.2018-06-11.0696472112-radiosubquestion">
@@ -12,7 +14,7 @@ var dfeFormConsent = `<input type="hidden" name="__userinfo_cs_version" value="v
 Continue <span class="fa fa-angle-right icon-space-left"></span>
 </button>`;
 
-var dfeFormIntro = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
+  var dfeFormIntro = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
 <input type="text" class="form-control" data-test-hook="subquestion-text" value="" name="opsuite.respondentmanagement.name_subquestion" id="opsuite.respondentmanagement.name_subquestion">
 <input type="email" class="form-control" data-test-hook="subquestion-email" value="" name="quickconsult.email_subquestion" id="quickconsult.email_subquestion">
 <select data-test-hook="subquestion-select" name="question.2018-04-17.3554038099-selectsubquestion" id="question.2018-04-17.3554038099-selectsubquestion">
@@ -74,7 +76,7 @@ var dfeFormIntro = `<input type="hidden" name="__userinfo_cs_version" value="v3.
 <button class="dss-btn " name="form.button.later" type="submit" ontouchstart="" data-preview="disabled">
 </button>`;
 
-var dfeFormQuestionsPage1 = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
+  var dfeFormQuestionsPage1 = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
 <input type="hidden" name="question.2018-04-16.2195189970-radiosubquestion" value="__deselected_radio_group">
 <input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-16.2195189970-radiosubquestion-0" value="strongly agree" name="question.2018-04-16.2195189970-radiosubquestion">
 <input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-16.2195189970-radiosubquestion-1" value="agree" name="question.2018-04-16.2195189970-radiosubquestion">
@@ -105,7 +107,6 @@ var dfeFormQuestionsPage1 = `<input type="hidden" name="__userinfo_cs_version" v
 </button>`;
 
 
-$(document).ready(function() {
 
   var uriBase = 'https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation';
   var iframeSubmitting = false;
