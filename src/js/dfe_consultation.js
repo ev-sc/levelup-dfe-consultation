@@ -201,7 +201,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
             console.log(checked);
             var selected = checked.val();
             console.log(link.targets[selected]);
-            // $(link.targets[selected]).prop( 'checked' ).attr( 'checked' );
+            $(link.targets[selected]).prop( 'checked' ).attr( 'checked' );
           }
           break;
         case 'textarea':
