@@ -140,6 +140,7 @@ $(document).ready(function() {
 
   /** Generate hidden forms */
   Object.values(dfePages).forEach(function(page){
+    console.log(page.formHTML);
     $(formGenerator(page, uriBase)).appendTo('#heading-container');
   });
 
