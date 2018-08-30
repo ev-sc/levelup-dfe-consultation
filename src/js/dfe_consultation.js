@@ -187,7 +187,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
       .find('div.question-block:visible')
       .find('.question')
       .map(function(){return this.id;}).get();
-    var doSubmit = SpeakoutQuestionIds.includes(page.identifier);
+    var doSubmit = SpeakoutQuestionIds !== null && SpeakoutQuestionIds.includes(page.identifier);
 
 
     /** Submit hidden form to DfE iframe  */
@@ -196,7 +196,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
       page.linking.forEach(function(link){
         switch(link.type) {
         case 'checkbox':
-          var checked = $(`input[name="${link.speakoutName}"]:checked`);
+          var checked = $(`input[name='${link.speakoutName}']:checked`);
           console.log(checked);
           console.log(checked.val());
           break;
