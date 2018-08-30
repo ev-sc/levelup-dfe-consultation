@@ -122,7 +122,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
         {
           speakoutName: 'q[10]',
           type: 'checkbox',
-          values: {
+          targets: {
             Yes: 'question.2018-06-11.0696472112-radiosubquestion-0',
             No: 'question.2018-06-11.0696472112-radiosubquestion-1'
           }
@@ -197,6 +197,10 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
         switch(link.type) {
         case 'checkbox':
           var checked = $(`input[name='${link.speakoutName}']:checked`);
+          if (checked.length !== 0) {
+            var selected = checked.val();
+            $(`input[name='${link.targets[selected]}']`).val(selected);
+          }
           console.log(checked);
           console.log(checked.val());
           break;
