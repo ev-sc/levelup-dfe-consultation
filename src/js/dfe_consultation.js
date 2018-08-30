@@ -213,8 +213,6 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
           break;
         case 'textarea':
           var content =  $(`textarea[name='${link.speakoutName}']`).val();
-          console.log(link);
-          console.log(content);
           $('#' + escapeSelector(link.targetId)).val(content);
           break;
         default:
