@@ -121,7 +121,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
       linking: [
         {
           speakoutName: 'q[10]',
-          type: 'checkbox',
+          type: 'radio',
           targetIds: {
             Yes: 'question.2018-06-11.0696472112-radiosubquestion-0',
             No: 'question.2018-06-11.0696472112-radiosubquestion-1'
@@ -131,6 +131,13 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
           speakoutName: 'q[13]',
           type: 'textarea',
           targetId: 'question.2018-06-11.1859110439-textareasubquestion'
+        },
+        {
+          speakoutName: 'q[14][]',
+          type: 'checkbox',
+          targetIds: {
+            yes: 'question.2018-06-11.0820412936-booleansubquestion'
+          }
         }
       ]
     },
@@ -194,18 +201,18 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
     if (page && doSubmit) {
       /** Load Speakout survey data into hidden form */
       page.linking.forEach(function(link){
+        var checked = $(`input[name='${link.speakoutName}']:checked`);
         switch(link.type) {
         case 'checkbox':
-          var checked = $(`input[name='${link.speakoutName}']:checked`);
+        case 'radio':
           if (checked.length !== 0) {
-            console.log(checked);
             var selected = checked.val();
-            console.log(link.targetIds[selected]);
-            console.log(escapeSelector(link.targetIds[selected]));
             $('#' + escapeSelector(link.targetIds[selected])).prop( 'checked', true ).attr( 'checked', 'checked' );
           }
           break;
         case 'textarea':
+          var content =  $(`textarea[name='${link.speakoutName}']`).val();
+          $('#' + escapeSelector(link.targetId[selected])).val(content);
           break;
         default:
           break;
