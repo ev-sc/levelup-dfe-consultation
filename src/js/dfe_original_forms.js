@@ -1,6 +1,4 @@
-$(document).ready(function() {
-
-  var dfeFormConsent = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.2-v3-frontend">
+export const dfeFormConsent = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.2-v3-frontend">
 <input type="hidden" name="question.2018-06-11.0696472112-radiosubquestion" value="__deselected_radio_group">
 <input type="radio" data-test-hook="subquestion-radio" id="question.2018-06-11.0696472112-radiosubquestion-0" value="Yes" name="question.2018-06-11.0696472112-radiosubquestion">
 <input type="radio" data-test-hook="subquestion-radio" id="question.2018-06-11.0696472112-radiosubquestion-1" value="No" name="question.2018-06-11.0696472112-radiosubquestion">
@@ -13,7 +11,7 @@ $(document).ready(function() {
 Continue <span class="fa fa-angle-right icon-space-left"></span>
 </button>`;
 
-  var dfeFormIntro = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
+export const dfeFormIntro = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
 <input type="text" class="form-control" data-test-hook="subquestion-text" value="" name="opsuite.respondentmanagement.name_subquestion" id="opsuite.respondentmanagement.name_subquestion">
 <input type="email" class="form-control" data-test-hook="subquestion-email" value="" name="quickconsult.email_subquestion" id="quickconsult.email_subquestion">
 <select data-test-hook="subquestion-select" name="question.2018-04-17.3554038099-selectsubquestion" id="question.2018-04-17.3554038099-selectsubquestion">
@@ -75,7 +73,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 <button class="dss-btn " name="form.button.later" type="submit" ontouchstart="" data-preview="disabled">
 </button>`;
 
-  var dfeFormQuestionsPage1 = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
+export const dfeFormQuestionsPage1 = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
 <input type="hidden" name="question.2018-04-16.2195189970-radiosubquestion" value="__deselected_radio_group">
 <input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-16.2195189970-radiosubquestion-0" value="strongly agree" name="question.2018-04-16.2195189970-radiosubquestion">
 <input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-16.2195189970-radiosubquestion-1" value="agree" name="question.2018-04-16.2195189970-radiosubquestion">
@@ -104,117 +102,3 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 </button>
 <button class="dss-btn " name="form.button.later" type="submit" ontouchstart="" data-preview="disabled">
 </button>`;
-
-
-
-  var uriBase = 'https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation';
-  var iframeSubmitting = false;
-  var activePageId = 'consent';
-
-  var dfePages = {
-    consent: {
-      name: 'consent',
-      dfeTarget: 'subpage.2018-06-11.0090277436',
-      identifier: 'survey-question-id-10',
-      nextPage: 'personalDetails',
-      formHTML: dfeFormConsent,
-      linking: [
-        {
-          speakoutId: 'survey-question-id-10',
-          type: 'checkbox',
-          values: {
-            Yes: 'question.2018-06-11.0696472112-radiosubquestion-0',
-            No: 'question.2018-06-11.0696472112-radiosubquestion-1'
-          }
-        },
-        {
-          speakoutId: 'survey-question-id-13',
-          type: 'textarea',
-          target: 'question.2018-06-11.1859110439-textareasubquestion'
-        }
-      ]
-    },
-    personalDetails: {
-      name: 'personalDetails',
-      dfeTarget: 'intro',
-      identifier: 'ENTER_HERE',
-      nextPage: 'questionsPage1',
-      formHTML: dfeFormIntro
-    },
-    questionsPage1: {
-      name: 'questionsPage1',
-      dfeTarget: 'subpage.2018-04-16.0784244677',
-      identifier: 'ENTER_HERE',
-      nextPage: '',
-      formHTML: dfeFormQuestionsPage1
-    }
-  };
-
-  /** Generate hidden forms */
-  Object.values(dfePages).forEach(function(page){
-    $(formGenerator(page, uriBase)).appendTo('#heading-container');
-  });
-
-  /** Load DfE consulation into iframe with initial page */
-  $('<iframe ' +
-    'id="dfe" ' +
-    'name="dfe" ' +
-    'style="visibility: visible; height: 600px; width: 90%; margin: 5%;" ' +
-    `src="${uriBase}/${dfePages[activePageId].dfeTarget}/">` +
-    '</iframe>')
-    .on('load', function(){
-      if (iframeSubmitting) { /** If reload after form submitted, load next DfE consulation page */
-        var currentPage = dfePages[activePageId];
-        activePageId = currentPage.nextPage;
-        var nextPageUri = dfePages[activePageId].dfeTarget;
-        iframeSubmitting = false;
-        $('#dfe').attr('src', `${uriBase}/${nextPageUri}/`);
-      }
-    }).appendTo('#heading-container');
-
-
-  /**
-   * This is where the data from each page of our standard Speakout survey gets entered into
-   * the fields of our hidden forms, each of which has target="dfe" set where dfe is the name/ID of
-   * the iframe in which the DfE consultation form is loaded
-   */
-  $('a.js-next-block').click(function(e) {
-    var page = dfePages[activePageId];
-
-    /** Check if this is a page for submission to the DfE form */
-    var SpeakoutQuestionIds = $(e.target)
-      .closest('form#survey-form')
-      .find('div.question-block:visible')
-      .find('.question')
-      .map(function(){return this.id;}).get();
-    var doSubmit = SpeakoutQuestionIds.includes(page.identifier);
-
-    /** Load Speakout survey data into hidden form */
-    page.linking.forEach(function(link){
-      switch(link.type) {
-      case 'checkbox':
-        var checked = $(`#${link.speakoutId}.input:checked`);
-        console.log(checked);
-        break;
-      case 'textarea':
-        break;
-      default:
-        break;
-      }
-    });
-
-    /** Submit hidden form to DfE iframe  */
-    if (page && doSubmit) {
-      iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
-      $(`#${page.name}-form`).submit();
-    }
-  });
-
-
-});
-
-function formGenerator(page, uriBase) {
-  return $(`<form enctype="multipart/form-data" id="${page.name}-form"
-      action="${uriBase}/${page.dfeTarget}/" target="dfe" method="post" style="visibility: visible; height: 400px;">` +
-      page.formHTML + '</form>');
-}
