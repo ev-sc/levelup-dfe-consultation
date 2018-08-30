@@ -9,7 +9,7 @@ $(document).ready(function() {
 <input type="checkbox" data-test-hook="subquestion-boolean" value="yes" name="question.2018-06-11.0820412936-booleansubquestion" id="question.2018-06-11.0820412936-booleansubquestion">
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-06-11.0090277436/">
-<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" ontouchstart="">
+<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" >
 Continue <span class="fa fa-angle-right icon-space-left"></span>
 </button>`;
 
@@ -68,11 +68,11 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 <input type="text" class="form-control" data-test-hook="subquestion-text" value="" name="question.2018-06-11.9682373257-textsubquestion" id="question.2018-06-11.9682373257-textsubquestion">
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/intro/">
-<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" ontouchstart="">
+<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" >
 </button>
-<button class="dss-btn " type="submit" ontouchstart="" name="form.button.first">
+<button class="dss-btn " type="submit"  name="form.button.first">
 </button>
-<button class="dss-btn " name="form.button.later" type="submit" ontouchstart="" data-preview="disabled">
+<button class="dss-btn " name="form.button.later" type="submit"  data-preview="disabled">
 </button>`;
 
   var dfeFormQuestionsPage1 = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
@@ -98,11 +98,11 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 <textarea name="question.2018-04-16.5897528280-textareasubquestion" id="question.2018-04-16.5897528280-textareasubquestion" class="form-control" data-test-hook="subquestion-textarea" rows="5"></textarea>
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-04-16.0784244677/">
-<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" ontouchstart="">
+<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" >
 </button>
-<button class="dss-btn " type="submit" ontouchstart="" name="form.button.first">
+<button class="dss-btn " type="submit"  name="form.button.first">
 </button>
-<button class="dss-btn " name="form.button.later" type="submit" ontouchstart="" data-preview="disabled">
+<button class="dss-btn " name="form.button.later" type="submit"  data-preview="disabled">
 </button>`;
 
 
@@ -201,7 +201,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
             console.log(checked);
             var selected = checked.val();
             console.log(link.targetIds[selected]);
-            console.log($.escapeSelector(link.targetIds[selected]));
+            console.log(link.targetIds[selected].escapeSelector());
             $('#' + $.escapeSelector(link.targetIds[selected])).prop( 'checked', true ).attr( 'checked', 'checked' );
           }
           break;
@@ -225,3 +225,12 @@ function formGenerator(page, uriBase) {
       action="${uriBase}/${page.dfeTarget}/" target="dfe" method="post" style="visibility: visible; height: 400px;">` +
       page.formHTML + '</form>');
 }
+
+String.prototype.escapeSelector = function () {
+  // noinspection RegExpRedundantEscape
+  return this.replace(
+    // eslint-disable-next-line no-useless-escape
+    /([$%&()*+,./:;<=>?@\[\\\]^\{|}~])/g,
+    '\\$1'
+  );
+};
