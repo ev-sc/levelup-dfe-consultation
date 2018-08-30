@@ -201,7 +201,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
             console.log(checked);
             var selected = checked.val();
             console.log(link.targetIds[selected]);
-            console.log($(link.targetIds[selected]));
+            console.log($.escapeSelector(link.targetIds[selected]));
             $('#' + $.escapeSelector(link.targetIds[selected])).prop( 'checked', true ).attr( 'checked', 'checked' );
           }
           break;
