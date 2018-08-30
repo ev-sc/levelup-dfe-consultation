@@ -194,6 +194,6 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 
 function formGenerator(page, uriBase) {
   return $(`<form enctype="multipart/form-data" id="${page.name}-form"
-      action="${uriBase}/${page.dfeTarget}/" target="dfe" method="post" style="visibility: visible; height: 0;">
-      ${page.formHTML}</form>`);
+      action="${uriBase}/${page.dfeTarget}/" target="dfe" method="post" style="visibility: visible; height: 0;">` +
+      page.formHTML + '</form>');
 }
