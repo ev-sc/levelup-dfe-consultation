@@ -123,14 +123,14 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
           speakoutName: 'q[10]',
           type: 'checkbox',
           targets: {
-            Yes: 'question.2018-06-11.0696472112-radiosubquestion',
-            No: 'question.2018-06-11.0696472112-radiosubquestion'
+            Yes: '#question.2018-06-11.0696472112-radiosubquestion-0',
+            No: '#question.2018-06-11.0696472112-radiosubquestion-1'
           }
         },
         {
           speakoutName: 'q[13]',
           type: 'textarea',
-          target: 'question.2018-06-11.1859110439-textareasubquestion'
+          target: '#question.2018-06-11.1859110439-textareasubquestion'
         }
       ]
     },
@@ -199,7 +199,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
           var checked = $(`input[name='${link.speakoutName}']:checked`);
           if (checked.length !== 0) {
             var selected = checked.val();
-            $(`input[name='${link.targets[selected]}']`).prop( 'checked' ).attr( 'checked' );
+            $(link.targets[selected]).prop( 'checked' ).attr( 'checked' );
           }
           console.log(checked);
           console.log(checked.val());
