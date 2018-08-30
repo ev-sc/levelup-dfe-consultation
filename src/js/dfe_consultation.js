@@ -123,8 +123,8 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
           speakoutName: 'q[10]',
           type: 'checkbox',
           targets: {
-            Yes: 'question.2018-06-11.0696472112-radiosubquestion-0',
-            No: 'question.2018-06-11.0696472112-radiosubquestion-1'
+            Yes: 'question.2018-06-11.0696472112-radiosubquestion',
+            No: 'question.2018-06-11.0696472112-radiosubquestion'
           }
         },
         {
