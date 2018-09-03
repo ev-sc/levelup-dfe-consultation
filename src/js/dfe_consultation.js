@@ -111,6 +111,11 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
   var uriBase = 'https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation';
   var iframeSubmitting = false;
   var activePageId = 'consent';
+  var userDetails = {
+    name: '',
+    email: '',
+    postcode: ''
+  };
 
   var dfePages = {
     consent: {
@@ -188,6 +193,18 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
    */
   $('a.js-next-block').click(function(e) {
     var page = dfePages[activePageId];
+
+    /** Check if this is the Level Up consent page */
+    var isConsentPage = $(e.target)
+      .closest('div.question-block:visible')
+      .find('#taker-details')
+      .map(function(){return this.id;}).get().length > 0;
+    if (isConsentPage) {
+      userDetails.name = $('#survey_taker_name').val();
+      userDetails.email = $('#survey_taker_email').val();
+      userDetails.postcode = $('#survey_taker_postcode').val();
+      console.log(userDetails);
+    }
 
     /** Check if this is a page for submission to the DfE form */
     var SpeakoutQuestionIds = $(e.target)
