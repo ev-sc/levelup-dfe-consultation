@@ -10,9 +10,9 @@ $(document).ready(function() {
 <input type="checkbox" data-test-hook="subquestion-boolean" value="yes" name="question.2018-06-11.0820412936-booleansubquestion" id="question.2018-06-11.0820412936-booleansubquestion">
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-06-11.0090277436/">
-<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" >
-Continue <span class="fa fa-angle-right icon-space-left"></span>
-</button>`;
+<input type="hidden" name="form.button.next">
+<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" ></button>
+<button name="form.button.later" type="submit"></button>`;
 
   var dfeFormIntro = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
 <input type="text" class="form-control" data-test-hook="subquestion-text" value="" name="opsuite.respondentmanagement.name_subquestion" id="opsuite.respondentmanagement.name_subquestion">
@@ -69,6 +69,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 <input type="text" class="form-control" data-test-hook="subquestion-text" value="" name="question.2018-06-11.9682373257-textsubquestion" id="question.2018-06-11.9682373257-textsubquestion">
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/intro/">
+<input type="hidden" name="form.button.next">
 <button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" >
 </button>
 <button class="dss-btn " type="submit"  name="form.button.first">
@@ -99,6 +100,7 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 <textarea name="question.2018-04-16.5897528280-textareasubquestion" id="question.2018-04-16.5897528280-textareasubquestion" class="form-control" data-test-hook="subquestion-textarea" rows="5"></textarea>
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-04-16.0784244677/">
+<input type="hidden" name="form.button.next">
 <button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" >
 </button>
 <button class="dss-btn " type="submit"  name="form.button.first">
@@ -108,13 +110,12 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 
   var dfeSubmissionPage = `<input type="email" id="email" class="form-control" name="email" value="">
 <input type="hidden" name="form.submitted" value="1">
-<button class="dss-btn dss-btn-primary pull-right" name="form.button.submit" type="submit">
-Submit Response
-</button><button class="dss-btn " type="submit"  name="form.button.first"></button>`;
+<input type="hidden" name="form.button.submit">`;
 
 
   var uriBase = 'https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation';
   var iframeSubmitting = false;
+  var finalPage = false;
   var activePageId = 'consent';
 
   var dfePages = {
@@ -160,7 +161,7 @@ Submit Response
           targetId: 'opsuite.respondentmanagement.name_subquestion'
         },
         {
-          speakoutName: 'q[15]',
+          speakoutName: 'q[16]',
           type: 'text',
           targetId: 'quickconsult.email_subquestion'
         }
@@ -188,7 +189,7 @@ Submit Response
     },
     submissionPage: {
       name: 'submissionPage',
-      dfeTarget: 'subpage.2018-04-16.0784244677',
+      dfeTarget: 'confirm_submit',
       identifier: 'survey-question-id-24',
       nextPage: '',
       formHTML: dfeSubmissionPage,
@@ -204,7 +205,8 @@ Submit Response
 
   /** Generate hidden forms */
   Object.values(dfePages).forEach(function(page){
-    $(formGenerator(page, uriBase)).appendTo('#heading-container');
+    var final = page.name === 'submissionPage' ? true : null;
+    $(formGenerator(page, uriBase, final)).appendTo('#heading-container');
   });
 
   /** Load DfE consulation into iframe with initial page */
@@ -216,11 +218,17 @@ Submit Response
     '</iframe>')
     .on('load', function(){
       if (iframeSubmitting) { /** If reload after form submitted, load next DfE consulation page */
-        var currentPage = dfePages[activePageId];
-        activePageId = currentPage.nextPage;
-        var nextPageUri = dfePages[activePageId].dfeTarget;
-        iframeSubmitting = false;
-        $('#dfe').attr('src', `${uriBase}/${nextPageUri}/`);
+        if (finalPage) {
+          console.log('final page submitting...');
+          iframeSubmitting = false;
+          return window.test_submit();
+        } else {
+          var currentPage = dfePages[activePageId];
+          activePageId = currentPage.nextPage;
+          var nextPageUri = dfePages[activePageId].dfeTarget;
+          iframeSubmitting = false;
+          $('#dfe').attr('src', `${uriBase}/${nextPageUri}`);
+        }
       }
     }).appendTo('#heading-container');
 
@@ -229,6 +237,9 @@ Submit Response
     $(this).prepend($('<option value=""></option>'));
     $(this).val('');
   });
+
+  /** Find email input and change type */
+  $('input[name="q[16]"]').attr('type', 'email');
 
   /**
    * This is where the data from each page of our standard Speakout survey gets entered into
@@ -252,7 +263,7 @@ Submit Response
     if (page && doSubmit) {
       /** Load Speakout survey data into hidden form */
       page.questions.forEach(function(question) {
-        var target = $('#' + escapeSelector(question.targetId));
+        if (question.targetId) var target = $('#' + escapeSelector(question.targetId));
         switch (question.type) {
         case 'checkbox':
         case 'radio':
@@ -265,6 +276,13 @@ Submit Response
         case 'text':
           var text = $(`input[name='${question.speakoutName}']`).val();
           target.val(text);
+          if (question.targetId === 'quickconsult.email_subquestion' && text.length > 0) {
+            /** If email provided already, hide from final page */
+            $('<div class="question"></div>');
+            $('#survey-question-id-24')
+              .html('<p>When you submit your response, you will be sent a receipt and a link to a PDF copy of your response.</p>')
+              .css({'background-color': '#f3f3f3', 'padding': '20px'});
+          }
           break;
         case 'textarea':
           var textarea = $(`textarea[name='${question.speakoutName}']`).val();
@@ -275,6 +293,8 @@ Submit Response
         }
       });
 
+
+
       iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
       $(`#${page.name}-form`).submit(); /** Trigger DfE iframe submission */
     }
@@ -283,7 +303,12 @@ Submit Response
   /**
    * Submit complete form to DfE
    */
-  $('a.js-submit-survey').click(function() {
+  var submitButton = $('a.js-submit-survey');
+  submitButton.removeAttr('onclick');
+  submitButton.click(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    finalPage = true;
     var page = dfePages[activePageId];
 
     /** Submit hidden form to DfE iframe  */
@@ -303,7 +328,7 @@ Submit Response
 
 function formGenerator(page, uriBase, final) {
   return $(`<form ${!final && 'enctype="multipart/form-data"'} id="${page.name}-form"
-      action="${uriBase}/${page.dfeTarget}/" target="dfe" method="post" style="visibility: visible; height: 400px;">` +
+      action="${uriBase}/${page.dfeTarget}" target="dfe" method="post" style="visibility: visible; height: 400px;">` +
       page.formHTML + '</form>');
 }
 
