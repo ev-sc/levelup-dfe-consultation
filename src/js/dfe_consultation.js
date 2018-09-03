@@ -196,7 +196,8 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 
     /** Check if this is the Level Up consent page */
     var isConsentPage = $(e.target)
-      .closest('div.question-block:visible')
+      .closest('form#survey-form')
+      .find('div.question-block:visible')
       .find('#taker-details')
       .map(function(){return this.id;}).get();
     console.log($(e.target)
