@@ -182,11 +182,9 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 
   /** Find select inputs and clear first items */
   $('div.question select').each(function(){
-    this.prepend($('<option value=""></option>'));
-    this.val('');
+    $(this).prepend($('<option value=""></option>'));
+    $(this).val('');
   });
-  var selects = $('div.question select').map(function(){return this.name;}).get();
-  console.log(selects);
 
   /**
    * This is where the data from each page of our standard Speakout survey gets entered into
