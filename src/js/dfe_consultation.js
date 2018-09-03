@@ -106,6 +106,11 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
 <button class="dss-btn " name="form.button.later" type="submit"  data-preview="disabled">
 </button>`;
 
+  var dfeSubmissionPage = `<input type="email" id="email" class="form-control" name="email" value="">
+<input type="hidden" name="form.submitted" value="1">
+<button class="dss-btn dss-btn-primary pull-right" name="form.button.submit" type="submit">
+Submit Response
+</button><button class="dss-btn " type="submit"  name="form.button.first"></button>`;
 
 
   var uriBase = 'https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation';
@@ -145,16 +150,55 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
     personalDetails: {
       name: 'personalDetails',
       dfeTarget: 'intro',
-      identifier: 'ENTER_HERE',
+      identifier: 'survey-question-id-15',
       nextPage: 'questionsPage1',
-      formHTML: dfeFormIntro
+      formHTML: dfeFormIntro,
+      questions: [
+        {
+          speakoutName: 'q[15]',
+          type: 'text',
+          targetId: 'opsuite.respondentmanagement.name_subquestion'
+        },
+        {
+          speakoutName: 'q[15]',
+          type: 'text',
+          targetId: 'quickconsult.email_subquestion'
+        }
+      ]
     },
     questionsPage1: {
       name: 'questionsPage1',
       dfeTarget: 'subpage.2018-04-16.0784244677',
-      identifier: 'ENTER_HERE',
+      identifier: 'survey-question-id-22',
+      nextPage: 'submissionPage',
+      formHTML: dfeFormQuestionsPage1,
+      questions: [
+        {
+          speakoutName: 'q[22]',
+          type: 'radio',
+          targetIds: {
+            'strongly agree': 'question.2018-04-16.2195189970-radiosubquestion-0',
+            'agree': 'question.2018-04-16.2195189970-radiosubquestion-0',
+            'neither agree or disagree': 'question.2018-04-16.2195189970-radiosubquestion-0',
+            'disagree': 'question.2018-04-16.2195189970-radiosubquestion-0',
+            'strongly disagree': 'question.2018-04-16.2195189970-radiosubquestion-0',
+          }
+        }
+      ]
+    },
+    submissionPage: {
+      name: 'submissionPage',
+      dfeTarget: 'subpage.2018-04-16.0784244677',
+      identifier: 'survey-question-id-24',
       nextPage: '',
-      formHTML: dfeFormQuestionsPage1
+      formHTML: dfeSubmissionPage,
+      questions: [
+        {
+          speakoutName: 'q[24]',
+          type: 'text',
+          targetId: 'email'
+        }
+      ]
     }
   };
 
@@ -208,34 +252,57 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
     if (page && doSubmit) {
       /** Load Speakout survey data into hidden form */
       page.questions.forEach(function(question) {
-        var checked = $(`input[name='${question.speakoutName}']:checked`);
+        var target = $('#' + escapeSelector(question.targetId));
         switch (question.type) {
         case 'checkbox':
         case 'radio':
+          var checked = $(`input[name='${question.speakoutName}']:checked`);
           if (checked.length !== 0) {
             var selected = checked.val();
             $('#' + escapeSelector(question.targetIds[selected])).prop('checked', true).attr('checked', 'checked');
           }
           break;
+        case 'text':
+          var text = $(`input[name='${question.speakoutName}']`).val();
+          target.val(text);
+          break;
         case 'textarea':
-          var content = $(`textarea[name='${question.speakoutName}']`).val();
-          $('#' + escapeSelector(question.targetId)).val(content);
+          var textarea = $(`textarea[name='${question.speakoutName}']`).val();
+          target.val(textarea);
           break;
         default:
           break;
         }
       });
 
-      // iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
-      // $(`#${page.name}-form`).submit(); /** Trigger DfE iframe submission */
+      iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
+      $(`#${page.name}-form`).submit(); /** Trigger DfE iframe submission */
     }
   });
 
+  /**
+   * Submit complete form to DfE
+   */
+  $('a.js-submit-survey').click(function() {
+    var page = dfePages[activePageId];
+
+    /** Submit hidden form to DfE iframe  */
+    if (page) {
+      /** Load Speakout survey data into hidden form */
+      page.questions.forEach(function(question) {
+        var text = $(`input[name='${question.speakoutName}']`).val();
+        $('#' + escapeSelector(question.targetId)).val(text);
+      });
+
+      iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
+      $(`#${page.name}-form`).submit(); /** Trigger DfE iframe submission */
+    }
+  });
 
 });
 
-function formGenerator(page, uriBase) {
-  return $(`<form enctype="multipart/form-data" id="${page.name}-form"
+function formGenerator(page, uriBase, final) {
+  return $(`<form ${!final && 'enctype="multipart/form-data"'} id="${page.name}-form"
       action="${uriBase}/${page.dfeTarget}/" target="dfe" method="post" style="visibility: visible; height: 400px;">` +
       page.formHTML + '</form>');
 }
