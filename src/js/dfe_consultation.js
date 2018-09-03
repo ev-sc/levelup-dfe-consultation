@@ -198,8 +198,12 @@ Continue <span class="fa fa-angle-right icon-space-left"></span>
     var isConsentPage = $(e.target)
       .closest('div.question-block:visible')
       .find('#taker-details')
-      .map(function(){return this.id;}).get().length > 0;
-    if (isConsentPage) {
+      .map(function(){return this.id;}).get();
+    console.log($(e.target)
+      .closest('div.question-block:visible')
+      .find('#taker-details'));
+    console.log(isConsentPage);
+    if (isConsentPage.length > 0) {
       userDetails.name = $('#survey_taker_name').val();
       userDetails.email = $('#survey_taker_email').val();
       userDetails.postcode = $('#survey_taker_postcode').val();
