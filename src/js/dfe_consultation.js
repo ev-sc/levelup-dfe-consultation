@@ -108,6 +108,41 @@ $(document).ready(function() {
 <button class="dss-btn " name="form.button.later" type="submit"  data-preview="disabled">
 </button>`;
 
+  var dfeFormQuestionsPage2 = `<form enctype="multipart/form-data" method="post" action="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-04-18.1679384722/">
+<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
+<input type="hidden" name="question.2018-04-18.2497916716-radiosubquestion" value="__deselected_radio_group">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.2497916716-radiosubquestion-0" value="strongly agree" name="question.2018-04-18.2497916716-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.2497916716-radiosubquestion-1" value="agree" name="question.2018-04-18.2497916716-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.2497916716-radiosubquestion-2" value="neither agree or disagree" name="question.2018-04-18.2497916716-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.2497916716-radiosubquestion-3" value="disagree" name="question.2018-04-18.2497916716-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.2497916716-radiosubquestion-4" value="strongly disagree" name="question.2018-04-18.2497916716-radiosubquestion">
+<textarea name="question.2018-04-18.2497916716-textareasubquestion" id="question.2018-04-18.2497916716-textareasubquestion" class="form-control" data-test-hook="subquestion-textarea" rows="5"></textarea>
+<input type="hidden" name="question.2018-04-18.7384765372-radiosubquestion" value="__deselected_radio_group">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7384765372-radiosubquestion-0" value="strongly agree" name="question.2018-04-18.7384765372-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7384765372-radiosubquestion-1" value="agree" name="question.2018-04-18.7384765372-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7384765372-radiosubquestion-2" value="neither agree or disagree" name="question.2018-04-18.7384765372-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7384765372-radiosubquestion-3" value="disagree" name="question.2018-04-18.7384765372-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7384765372-radiosubquestion-4" value="strongly disagree" name="question.2018-04-18.7384765372-radiosubquestion">
+<textarea name="question.2018-04-18.7384765372-textareasubquestion" id="question.2018-04-18.7384765372-textareasubquestion" class="form-control" data-test-hook="subquestion-textarea" rows="5"></textarea>
+<input type="hidden" name="question.2018-04-18.7701516171-radiosubquestion" value="__deselected_radio_group">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7701516171-radiosubquestion-0" value="strongly agree" name="question.2018-04-18.7701516171-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7701516171-radiosubquestion-1" value="agree" name="question.2018-04-18.7701516171-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7701516171-radiosubquestion-2" value="neither agree or disagree" name="question.2018-04-18.7701516171-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7701516171-radiosubquestion-3" value="disagree" name="question.2018-04-18.7701516171-radiosubquestion">
+<input type="radio" data-test-hook="subquestion-radio" id="question.2018-04-18.7701516171-radiosubquestion-4" value="strongly disagree" name="question.2018-04-18.7701516171-radiosubquestion">
+<textarea name="question.2018-04-18.7701516171-textareasubquestion" id="question.2018-04-18.7701516171-textareasubquestion" class="form-control" data-test-hook="subquestion-textarea" rows="5"></textarea>
+<input type="hidden" name="form.submitted" value="1">
+<input type="hidden" 
+name="came_from" 
+value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-04-18.1679384722/">`;
+
+  var dfeFormQuestionsPage3 = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
+<textarea name="question.2018-06-11.6085874157-textareasubquestion" id="question.2018-06-11.6085874157-textareasubquestion" class="form-control" data-test-hook="subquestion-textarea" rows="5"></textarea>
+<input type="hidden" name="form.submitted" value="1">
+<input type="hidden" 
+name="came_from" 
+value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-06-11.5296214505/">`;
+
   var dfeSubmissionPage = `<input type="email" id="email" class="form-control" name="email" value="">
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="form.button.submit">`;
@@ -117,6 +152,7 @@ $(document).ready(function() {
   var iframeSubmitting = false;
   var finalPage = false;
   var activePageId = 'consent';
+  var spinner = '<i id="surveySpinner" style="display:none; color: #20a857" class="fa fa-3x fa-spin fa-spinner"></i>';
 
   var dfePages = {
     consent: {
@@ -171,7 +207,7 @@ $(document).ready(function() {
       name: 'questionsPage1',
       dfeTarget: 'subpage.2018-04-16.0784244677',
       identifier: 'survey-question-id-22',
-      nextPage: 'submissionPage',
+      nextPage: 'questionsPage2',
       formHTML: dfeFormQuestionsPage1,
       questions: [
         {
@@ -179,12 +215,79 @@ $(document).ready(function() {
           type: 'radio',
           targetIds: {
             'strongly agree': 'question.2018-04-16.2195189970-radiosubquestion-0',
-            'agree': 'question.2018-04-16.2195189970-radiosubquestion-0',
-            'neither agree or disagree': 'question.2018-04-16.2195189970-radiosubquestion-0',
-            'disagree': 'question.2018-04-16.2195189970-radiosubquestion-0',
-            'strongly disagree': 'question.2018-04-16.2195189970-radiosubquestion-0',
+            'agree': 'question.2018-04-16.2195189970-radiosubquestion-1',
+            'neither agree or disagree': 'question.2018-04-16.2195189970-radiosubquestion-2',
+            'disagree': 'question.2018-04-16.2195189970-radiosubquestion-3',
+            'strongly disagree': 'question.2018-04-16.2195189970-radiosubquestion-4',
+          }
+        },
+        {
+          speakoutName: 'q[22]',
+          type: 'radio',
+          targetIds: {
+            'strongly agree': 'question.2018-04-16.4593421441-radiosubquestion-0',
+            'agree': 'question.2018-04-16.4593421441-radiosubquestion-1',
+            'neither agree or disagree': 'question.2018-04-16.4593421441-radiosubquestion-2',
+            'disagree': 'question.2018-04-16.4593421441-radiosubquestion-3',
+            'strongly disagree': 'question.2018-04-16.4593421441-radiosubquestion-4',
+          }
+        },
+        {
+          speakoutName: 'q[22]',
+          type: 'radio',
+          targetIds: {
+            'strongly agree': 'question.2018-04-16.5897528280-radiosubquestion-0',
+            'agree': 'question.2018-04-16.5897528280-radiosubquestion-1',
+            'neither agree or disagree': 'question.2018-04-16.5897528280-radiosubquestion-2',
+            'disagree': 'question.2018-04-16.5897528280-radiosubquestion-3',
+            'strongly disagree': 'question.2018-04-16.5897528280-radiosubquestion-4',
           }
         }
+      ]
+    },
+    questionsPage2: {
+      name: 'questionsPage2',
+      dfeTarget: 'subpage.2018-04-18.1679384722',
+      identifier: 'IDHERE',
+      nextPage: 'questionsPage3',
+      formHTML: dfeFormQuestionsPage2,
+      questions: [
+        {
+          speakoutName: 'q[22]',
+          type: 'radio',
+          targetIds: {
+            'strongly agree': 'question.2018-04-18.2497916716-radiosubquestion-0',
+            'agree': 'question.2018-04-18.2497916716-radiosubquestion-1',
+            'neither agree or disagree': 'question.2018-04-18.2497916716-radiosubquestion-2',
+            'disagree': 'question.2018-04-18.2497916716-radiosubquestion-3',
+            'strongly disagree': 'question.2018-04-18.2497916716-radiosubquestion-4',
+          }
+        },
+        {
+          speakoutName: 'q[22]',
+          type: 'radio',
+          targetIds: {
+            'strongly agree': 'question.2018-04-18.7384765372-radiosubquestion-0',
+            'agree': 'question.2018-04-18.7384765372-radiosubquestion-1',
+            'neither agree or disagree': 'question.2018-04-18.7384765372-radiosubquestion-2',
+            'disagree': 'question.2018-04-18.7384765372-radiosubquestion-3',
+            'strongly disagree': 'question.2018-04-18.7384765372-radiosubquestion-4',
+          }
+        }
+      ]
+    },
+    questionsPage3: {
+      name: 'questionsPage3',
+      dfeTarget: 'subpage.2018-06-11.5296214505',
+      identifier: 'IDHERE',
+      nextPage: 'submissionPage',
+      formHTML: dfeFormQuestionsPage3,
+      questions: [
+        {
+          speakoutName: 'q[13]',
+          type: 'textarea',
+          targetId: 'question.2018-06-11.1859110439-textareasubquestion'
+        },
       ]
     },
     submissionPage: {
@@ -223,12 +326,18 @@ $(document).ready(function() {
           iframeSubmitting = false;
           return window.test_submit();
         } else {
+          console.log('DfE page loading after POST');
           var currentPage = dfePages[activePageId];
           activePageId = currentPage.nextPage;
           var nextPageUri = dfePages[activePageId].dfeTarget;
           iframeSubmitting = false;
           $('#dfe').attr('src', `${uriBase}/${nextPageUri}`);
         }
+      } else {
+        console.log('DfE page loading after src change');
+        $('.js-question-blocks').show();
+        $('#surveySpinner').hide();
+        $('a.js-next-block').show();
       }
     }).appendTo('#heading-container');
 
@@ -241,6 +350,9 @@ $(document).ready(function() {
   /** Find email input and change type */
   $('input[name="q[16]"]').attr('type', 'email');
 
+  /** Add spinner */
+  $('#survey-form').prepend(spinner);
+
   /**
    * This is where the data from each page of our standard Speakout survey gets entered into
    * the fields of our hidden forms, each of which has target="dfe" set where dfe is the name/ID of
@@ -248,7 +360,6 @@ $(document).ready(function() {
    */
   $('a.js-next-block').click(function(e) {
     var page = dfePages[activePageId];
-
 
     /** Check if this is a page for submission to the DfE form */
     var SpeakoutQuestionIds = $(e.target)
@@ -261,6 +372,9 @@ $(document).ready(function() {
 
     /** Submit hidden form to DfE iframe  */
     if (page && doSubmit) {
+      $('.js-question-blocks').hide();
+      $('#surveySpinner').show();
+      $('a.js-next-block').hide();
       /** Load Speakout survey data into hidden form */
       page.questions.forEach(function(question) {
         if (question.targetId) var target = $('#' + escapeSelector(question.targetId));
@@ -292,8 +406,6 @@ $(document).ready(function() {
           break;
         }
       });
-
-
 
       iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
       $(`#${page.name}-form`).submit(); /** Trigger DfE iframe submission */
