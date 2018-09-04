@@ -373,8 +373,6 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
    * the iframe in which the DfE consultation form is loaded
    */
   $('a.js-next-block').click(function(e) {
-    e.preventDefault();
-    e.stopPropagation();
     var page = dfePages[activePageId];
 
     /** Check if this is a page for submission to the DfE form */
