@@ -10,9 +10,7 @@ $(document).ready(function() {
 <input type="checkbox" data-test-hook="subquestion-boolean" value="yes" name="question.2018-06-11.0820412936-booleansubquestion" id="question.2018-06-11.0820412936-booleansubquestion">
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-06-11.0090277436/">
-<input type="hidden" name="form.button.next">
-<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" ></button>
-<button name="form.button.later" type="submit"></button>`;
+<input type="hidden" name="form.button.next">`;
 
   var dfeFormIntro = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
 <input type="text" class="form-control" data-test-hook="subquestion-text" value="" name="opsuite.respondentmanagement.name_subquestion" id="opsuite.respondentmanagement.name_subquestion">
@@ -69,13 +67,7 @@ $(document).ready(function() {
 <input type="text" class="form-control" data-test-hook="subquestion-text" value="" name="question.2018-06-11.9682373257-textsubquestion" id="question.2018-06-11.9682373257-textsubquestion">
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/intro/">
-<input type="hidden" name="form.button.next">
-<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" >
-</button>
-<button class="dss-btn " type="submit"  name="form.button.first">
-</button>
-<button class="dss-btn " name="form.button.later" type="submit"  data-preview="disabled">
-</button>`;
+<input type="hidden" name="form.button.next">`;
 
   var dfeFormQuestionsPage1 = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
 <input type="hidden" name="question.2018-04-16.2195189970-radiosubquestion" value="__deselected_radio_group">
@@ -100,13 +92,7 @@ $(document).ready(function() {
 <textarea name="question.2018-04-16.5897528280-textareasubquestion" id="question.2018-04-16.5897528280-textareasubquestion" class="form-control" data-test-hook="subquestion-textarea" rows="5"></textarea>
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-04-16.0784244677/">
-<input type="hidden" name="form.button.next">
-<button class="dss-btn dss-btn-primary pull-right" name="form.button.next" type="submit" >
-</button>
-<button class="dss-btn " type="submit"  name="form.button.first">
-</button>
-<button class="dss-btn " name="form.button.later" type="submit"  data-preview="disabled">
-</button>`;
+<input type="hidden" name="form.button.next">`;
 
   var dfeFormQuestionsPage2 = `<form enctype="multipart/form-data" method="post" action="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-04-18.1679384722/">
 <input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
@@ -387,6 +373,8 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
    * the iframe in which the DfE consultation form is loaded
    */
   $('a.js-next-block').click(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
     var page = dfePages[activePageId];
 
     /** Check if this is a page for submission to the DfE form */
@@ -395,11 +383,12 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
       .find('div.question-block:visible')
       .find('.question')
       .map(function(){return this.id;}).get();
-    var doSubmit = SpeakoutQuestionIds !== null && SpeakoutQuestionIds.includes(page.identifier);
-
+    var doSubmit = SpeakoutQuestionIds !== null && SpeakoutQuestionIds.includes(page.identifier)
+      // eslint-disable-next-line no-undef
+      && validate_form($(e.target).closest('form#survey-form'));
 
     /** Submit hidden form to DfE iframe  */
-    if (page && doSubmit) {
+    if (page && doSubmit === true) {
       $('.js-question-blocks').hide();
       $('#surveySpinner').show();
       $('a.js-next-block').hide();
