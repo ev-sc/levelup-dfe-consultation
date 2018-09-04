@@ -152,7 +152,9 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
   var iframeSubmitting = false;
   var finalPage = false;
   var activePageId = 'consent';
-  var spinner = '<i id="surveySpinner" style="display:none; color: #20a857" class="fa fa-3x fa-spin fa-spinner"></i>';
+  var userEmail = '';
+  var spinner = '<div id="surveySpinner" style="display:none; width: 100%; height: 80px; text-align: center; margin-bottom: 100px;"><img ' +
+    'src="https://rawgit.com/lowlandjuju/levelup-dfe-consultation/master/Wedges-3s-97px.svg" /><p>Loading next page...</p></div>';
 
   var dfePages = {
     consent: {
@@ -205,18 +207,38 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
           speakoutName: 'q[70]',
           type: 'select',
           targetId: 'question.2018-04-17.3554038099-selectsubquestion'
+        },
+        {
+          speakoutName: 'q[71]',
+          type: 'text',
+          targetId: 'question.2018-04-17.3554038099-textsubquestion'
+        },
+        {
+          speakoutName: 'q[72]',
+          type: 'select',
+          targetId: 'question.2018-04-17.6432127774-selectsubquestion-1'
+        },
+        {
+          speakoutName: 'q[73]',
+          type: 'select',
+          targetId: 'question.2018-06-11.9682373257-selectsubquestion'
+        },
+        {
+          speakoutName: 'q[74]',
+          type: 'text',
+          targetId: 'question.2018-06-11.9682373257-textsubquestion'
         }
       ]
     },
     questionsPage1: {
       name: 'questionsPage1',
       dfeTarget: 'subpage.2018-04-16.0784244677',
-      identifier: 'survey-question-id-22',
+      identifier: 'survey-question-id-75',
       nextPage: 'questionsPage2',
       formHTML: dfeFormQuestionsPage1,
       questions: [
         {
-          speakoutName: 'q[22]',
+          speakoutName: 'q[75]',
           type: 'radio',
           targetIds: {
             'strongly agree': 'question.2018-04-16.2195189970-radiosubquestion-0',
@@ -227,7 +249,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
           }
         },
         {
-          speakoutName: 'q[22]',
+          speakoutName: 'q[78]',
           type: 'radio',
           targetIds: {
             'strongly agree': 'question.2018-04-16.4593421441-radiosubquestion-0',
@@ -238,7 +260,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
           }
         },
         {
-          speakoutName: 'q[22]',
+          speakoutName: 'q[79]',
           type: 'radio',
           targetIds: {
             'strongly agree': 'question.2018-04-16.5897528280-radiosubquestion-0',
@@ -253,12 +275,12 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     questionsPage2: {
       name: 'questionsPage2',
       dfeTarget: 'subpage.2018-04-18.1679384722',
-      identifier: 'IDHERE',
+      identifier: 'survey-question-id-84',
       nextPage: 'questionsPage3',
       formHTML: dfeFormQuestionsPage2,
       questions: [
         {
-          speakoutName: 'q[22]',
+          speakoutName: 'q[84]',
           type: 'radio',
           targetIds: {
             'strongly agree': 'question.2018-04-18.2497916716-radiosubquestion-0',
@@ -269,7 +291,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
           }
         },
         {
-          speakoutName: 'q[22]',
+          speakoutName: 'q[85]',
           type: 'radio',
           targetIds: {
             'strongly agree': 'question.2018-04-18.7384765372-radiosubquestion-0',
@@ -284,26 +306,26 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     questionsPage3: {
       name: 'questionsPage3',
       dfeTarget: 'subpage.2018-06-11.5296214505',
-      identifier: 'IDHERE',
+      identifier: 'survey-question-id-81',
       nextPage: 'submissionPage',
       formHTML: dfeFormQuestionsPage3,
       questions: [
         {
-          speakoutName: 'q[13]',
+          speakoutName: 'q[81]',
           type: 'textarea',
-          targetId: 'question.2018-06-11.1859110439-textareasubquestion'
+          targetId: 'question.2018-06-11.6085874157-textareasubquestion'
         },
       ]
     },
     submissionPage: {
       name: 'submissionPage',
       dfeTarget: 'confirm_submit',
-      identifier: 'survey-question-id-24',
+      identifier: 'survey-question-id-83',
       nextPage: '',
       formHTML: dfeSubmissionPage,
       questions: [
         {
-          speakoutName: 'q[24]',
+          speakoutName: 'q[83]',
           type: 'text',
           targetId: 'email'
         }
@@ -321,10 +343,11 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
   $('<iframe ' +
     'id="dfe" ' +
     'name="dfe" ' +
-    'style="visibility: visible; height: 600px; width: 90%; margin: 5%;" ' +
+    'style="visibility: hidden; height: 0; width: 90%; margin: 5%;" ' +
     `src="${uriBase}/${dfePages[activePageId].dfeTarget}/">` +
     '</iframe>')
     .on('load', function(){
+      var currentPage = dfePages[activePageId];
       if (iframeSubmitting) { /** If reload after form submitted, load next DfE consulation page */
         if (finalPage) {
           console.log('final page submitting...');
@@ -332,7 +355,6 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
           return window.test_submit();
         } else {
           console.log('DfE page loading after POST');
-          var currentPage = dfePages[activePageId];
           activePageId = currentPage.nextPage;
           var nextPageUri = dfePages[activePageId].dfeTarget;
           iframeSubmitting = false;
@@ -342,7 +364,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
         console.log('DfE page loading after src change');
         $('.js-question-blocks').show();
         $('#surveySpinner').hide();
-        $('a.js-next-block').show();
+        if (currentPage.name !== 'submissionPage') $('a.js-next-block').show();
       }
     }).appendTo('#heading-container');
 
@@ -352,8 +374,9 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     $(this).val('');
   });
 
-  /** Find email input and change type */
-  $('input[name="q[16]"]').attr('type', 'email');
+  /** Find email inputs and change type */
+  $('input[name="q[69]"]').attr('type', 'email');
+  $('input[name="q[83]"]').attr('type', 'email');
 
   /** Add spinner */
   $('#survey-form').prepend(spinner);
@@ -394,13 +417,16 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
           break;
         case 'select':
         case 'text':
-          var text = $(`input[name='${question.speakoutName}']`).val();
+          var text = $(`${question.type === 'select' ? 'select' : 'input'}[name='${question.speakoutName}']`).val();
           target.val(text);
+
           if (question.targetId === 'quickconsult.email_subquestion' && text.length > 0) {
             /** If email provided already, hide from final page */
-            $('<div class="question"></div>');
-            $('#survey-question-id-24')
-              .html('<p>When you submit your response, you will be sent a receipt and a link to a PDF copy of your response.</p>')
+            userEmail = text;
+            console.log('user email set to: ' + userEmail);
+            $('#survey-question-id-83 div.form-group').hide();
+            $('#survey-question-id-83')
+              .append('<p>When you submit your response, you will be sent a receipt and a link to a PDF copy of your response.</p>')
               .css({'background-color': '#f3f3f3', 'padding': '20px'});
           }
           break;
@@ -428,17 +454,23 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     e.stopPropagation();
     finalPage = true;
     var page = dfePages[activePageId];
+    $('.js-question-blocks').hide();
+    $('#surveySpinner p').html('Submitting your answers to the Department for Education...');
+    $('#surveySpinner').show();
 
     /** Submit hidden form to DfE iframe  */
     if (page) {
       /** Load Speakout survey data into hidden form */
       page.questions.forEach(function(question) {
-        var text = $(`input[name='${question.speakoutName}']`).val();
-        $('#' + escapeSelector(question.targetId)).val(text);
+        if (question.targetId === 'email') {
+          console.log('user email retrieved: ' + userEmail);
+          $(`input[name='${question.speakoutName}']`).val(userEmail);
+          $('#email').val(userEmail);
+        }
       });
 
-      iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
-      $(`#${page.name}-form`).submit(); /** Trigger DfE iframe submission */
+      // iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
+      // $(`#${page.name}-form`).submit(); /** Trigger DfE iframe submission */
     }
   });
 
@@ -446,7 +478,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
 
 function formGenerator(page, uriBase, final) {
   return $(`<form ${!final && 'enctype="multipart/form-data"'} id="${page.name}-form"
-      action="${uriBase}/${page.dfeTarget}" target="dfe" method="post" style="visibility: visible; height: 400px;">` +
+      action="${uriBase}/${page.dfeTarget}" target="dfe" method="post" style="visibility: hidden; height: 0;">` +
       page.formHTML + '</form>');
 }
 
