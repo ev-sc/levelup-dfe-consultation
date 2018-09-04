@@ -469,8 +469,8 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
         }
       });
 
-      // iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
-      // $(`#${page.name}-form`).submit(); /** Trigger DfE iframe submission */
+      iframeSubmitting = true; /** Set flag so iframe listener knows to load next form page */
+      $(`#${page.name}-form`).submit(); /** Trigger DfE iframe submission */
     }
   });
 
