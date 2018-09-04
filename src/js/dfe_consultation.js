@@ -158,12 +158,12 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     consent: {
       name: 'consent',
       dfeTarget: 'subpage.2018-06-11.0090277436',
-      identifier: 'survey-question-id-10',
+      identifier: 'survey-question-id-65',
       nextPage: 'personalDetails',
       formHTML: dfeFormConsent,
       questions: [
         {
-          speakoutName: 'q[10]',
+          speakoutName: 'q[65]',
           type: 'radio',
           targetIds: {
             Yes: 'question.2018-06-11.0696472112-radiosubquestion-0',
@@ -171,12 +171,12 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
           }
         },
         {
-          speakoutName: 'q[13]',
+          speakoutName: 'q[66]',
           type: 'textarea',
           targetId: 'question.2018-06-11.1859110439-textareasubquestion'
         },
         {
-          speakoutName: 'q[14][]',
+          speakoutName: 'q[67][]',
           type: 'checkbox',
           targetIds: {
             yes: 'question.2018-06-11.0820412936-booleansubquestion'
@@ -187,19 +187,24 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     personalDetails: {
       name: 'personalDetails',
       dfeTarget: 'intro',
-      identifier: 'survey-question-id-15',
+      identifier: 'survey-question-id-68',
       nextPage: 'questionsPage1',
       formHTML: dfeFormIntro,
       questions: [
         {
-          speakoutName: 'q[15]',
+          speakoutName: 'q[68]',
           type: 'text',
           targetId: 'opsuite.respondentmanagement.name_subquestion'
         },
         {
-          speakoutName: 'q[16]',
+          speakoutName: 'q[69]',
           type: 'text',
           targetId: 'quickconsult.email_subquestion'
+        },
+        {
+          speakoutName: 'q[70]',
+          type: 'select',
+          targetId: 'question.2018-04-17.3554038099-selectsubquestion'
         }
       ]
     },
@@ -387,6 +392,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
             $('#' + escapeSelector(question.targetIds[selected])).prop('checked', true).attr('checked', 'checked');
           }
           break;
+        case 'select':
         case 'text':
           var text = $(`input[name='${question.speakoutName}']`).val();
           target.val(text);
