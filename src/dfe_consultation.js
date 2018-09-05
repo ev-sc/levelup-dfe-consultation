@@ -1,7 +1,14 @@
 /* eslint-disable no-console */
 $(document).ready(function() {
-  setTimeout(function(){
 
+  /** Loading spinner */
+  var spinner = '<div id="surveySpinner" style="display:none; width: 100%; height: 80px; text-align: center; margin-bottom: 100px;"><img ' +
+    'src="https://rawgit.com/lowlandjuju/levelup-dfe-consultation/master/Wedges-3s-97px.svg" /><p>Loading next page...</p></div>';
+  $('#survey-form').prepend(spinner);
+  $('.js-question-blocks').hide();
+  $('#surveySpinner').show();
+
+  setTimeout(function(){
 
     var dfeFormConsent = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.2-v3-frontend">
 <input type="hidden" name="question.2018-06-11.0696472112-radiosubquestion" value="__deselected_radio_group">
@@ -134,15 +141,6 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     var dfeSubmissionPage = `<input type="email" id="email" class="form-control" name="email" value="">
 <input type="hidden" name="form.submitted" value="1">
 <input type="hidden" name="form.button.submit">`;
-
-
-    var uriBase = 'https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation';
-    var iframeSubmitting = false;
-    var finalPage = false;
-    var activePageId = 'consent';
-    var userEmail = '';
-    var spinner = '<div id="surveySpinner" style="display:none; width: 100%; height: 80px; text-align: center; margin-bottom: 100px;"><img ' +
-    'src="https://rawgit.com/lowlandjuju/levelup-dfe-consultation/master/Wedges-3s-97px.svg" /><p>Loading next page...</p></div>';
 
     var dfePages = {
       consent: {
@@ -321,6 +319,16 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
       }
     };
 
+    /** Setup */
+    var uriBase = 'https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation';
+    var iframeSubmitting = false;
+    var finalPage = false;
+    var activePageId = 'consent';
+    var userEmail = '';
+    var submitButton = $('a.js-submit-survey');
+    submitButton.addClass('disabled');
+
+
     /** Generate hidden forms */
     Object.values(dfePages).forEach(function(page){
       var final = page.name === 'submissionPage' ? true : null;
@@ -331,7 +339,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     $('<iframe ' +
     'id="dfe" ' +
     'name="dfe" ' +
-    'style="visibility: hidden; height: 0; width: 0; margin: 0;" ' +
+    'style="display: none; height: 0; width: 0; margin: 0;" ' +
     `src="${uriBase}/${dfePages[activePageId].dfeTarget}/">` +
     '</iframe>')
       .on('load', function(){
@@ -354,6 +362,8 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
           $('#surveySpinner').hide();
           if (currentPage.name !== 'submissionPage') {
             $('a.js-next-block').show();
+          } else {
+            submitButton.removeClass('disabled');
           }
         }
       }).appendTo('#heading-container');
@@ -367,9 +377,6 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     /** Find email inputs and change type */
     $('input[name="q[69]"]').attr('type', 'email');
     $('input[name="q[83]"]').attr('type', 'email');
-
-    /** Add spinner */
-    $('#survey-form').prepend(spinner);
 
     /**
    * This is where the data from each page of our standard Speakout survey gets entered into
@@ -438,7 +445,6 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     /**
    * Submit complete form to DfE
    */
-    var submitButton = $('a.js-submit-survey');
     submitButton.removeAttr('onclick');
     submitButton.click(function(e) {
       e.preventDefault();
@@ -469,7 +475,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
 
 function formGenerator(page, uriBase, final) {
   return $(`<form ${!final && 'enctype="multipart/form-data"'} id="${page.name}-form"
-      action="${uriBase}/${page.dfeTarget}" target="dfe" method="post" style="visibility: hidden; height: 0; width: 0;">` +
+      action="${uriBase}/${page.dfeTarget}" target="dfe" method="post" style="display: none; height: 0; width: 0;">` +
       page.formHTML + '</form>');
 }
 
