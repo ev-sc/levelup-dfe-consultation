@@ -343,12 +343,13 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     `src="${uriBase}/${dfePages[activePageId].dfeTarget}/">` +
     '</iframe>')
       .on('load', function(){
+        /** Trigger UI changes, form actions and iframe updates */
         var currentPage = dfePages[activePageId];
-        if (iframeSubmitting) { /** If reload after form submitted, load next DfE consulation page */
+        if (iframeSubmitting) {
           if (finalPage) {
             console.log('final page submitting...');
             iframeSubmitting = false;
-            return window.test_submit();
+            return window.test_submit(); // This is a Speakout built-in function that submits the form data
           } else {
             console.log('DfE page loading after POST');
             activePageId = currentPage.nextPage;
@@ -394,7 +395,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
         .map(function(){return this.id;}).get();
       var doSubmit = SpeakoutQuestionIds !== null && SpeakoutQuestionIds.includes(page.identifier)
       // eslint-disable-next-line no-undef
-      && validate_form($(e.target).closest('form#survey-form'));
+      && validate_form($(e.target).closest('form#survey-form')); // making use of Speakout's built-in form validation
 
       /** Submit hidden form to DfE iframe  */
       if (page && doSubmit === true) {
@@ -419,7 +420,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
             target.val(text);
 
             if (question.targetId === 'quickconsult.email_subquestion' && text.length > 0) {
-            /** If email provided already, hide from final page */
+            /** If email provided already, hide input from final page */
               userEmail = text;
               console.log('user email set to: ' + userEmail);
               $('#survey-question-id-83 div.form-group').hide();
