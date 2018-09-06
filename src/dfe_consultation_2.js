@@ -48,6 +48,12 @@ $(document).ready(function() {
       }
     });
 
+    /** Format DfE modal data */
+    $('table.MsoTableGrid td.subhead').each(function(){
+      var htmlString = $( this ).html();
+      $(this).closest('tr').before($(htmlString).wrap('<tr></tr>'));
+      $(this).remove();
+    });
 
     /** Find select inputs and clear first items */
     $('div.question select').each(function(){

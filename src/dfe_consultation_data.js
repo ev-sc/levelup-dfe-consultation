@@ -38,7 +38,12 @@ var dfeFormIntro = `<input type="hidden" name="__userinfo_cs_version" value="v3.
 <input type="hidden" name="came_from" value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/intro/">
 <input type="hidden" name="form.button.next">`;
 
-var dfeFormQuestionsPage0 = '';
+var dfeFormQuestionsPage0 = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
+<textarea name="question.2018-06-11.6085874157-textareasubquestion" id="question.2018-06-11.6085874157-textareasubquestion" class="form-control" data-test-hook="subquestion-textarea" rows="5"></textarea>
+<input type="hidden" name="form.submitted" value="1">
+<input type="hidden" 
+name="came_from" 
+value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-education/consultation/subpage.2018-06-11.5296214505/">`;
 
 var dfeFormQuestionsPage1 = `<input type="hidden" name="__userinfo_cs_version" value="v3.11.3-v3-frontend">
 <input type="hidden" name="question.2018-04-16.2195189970-radiosubquestion" value="__deselected_radio_group">
@@ -117,13 +122,13 @@ var modalContent = [
 
 <p><span><span><span><b><span><span>By the end of primary school:</span></span></b></span></span></span></p>
 
-<table class="MsoTableGrid" title="By the end of primary school:" style="width: 624px;">
+<table class="MsoTableGrid" title="By the end of primary school:" >
 	<tbody>
 		<tr>
-			<td valign="top" width="114">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span><span>Families and people who care for me</span></span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="509">
+			<td valign="top" >
 			<p><span><span><span><span><span>Pupils should know</span></span></span></span></span></p>
 
 			<ul>
@@ -137,10 +142,10 @@ var modalContent = [
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" width="114">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span><span>Caring friendships</span></span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="509">
+			<td valign="top" >
 			<p><span><span><span><span><span>Pupils should know</span></span></span></span></span></p>
 
 			<ul>
@@ -153,10 +158,10 @@ var modalContent = [
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" width="114">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span><span>Respectful relationships</span></span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="509">
+			<td valign="top" >
 			<p><span><span><span><span><span>Pupils should know</span></span></span></span></span></p>
 
 			<ul>
@@ -171,10 +176,10 @@ var modalContent = [
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" width="114">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span><span>Online relationships</span></span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="509">
+			<td valign="top" >
 			<p><span><span><span><span><span>Pupils should know</span></span></span></span></span></p>
 
 			<ul>
@@ -187,10 +192,10 @@ var modalContent = [
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" width="114">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span><span>Being safe</span></span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="509">
+			<td valign="top" >
 			<p><span><span><span><span><span>Pupils should know</span></span></span></span></span></p>
 
 			<ul>
@@ -243,13 +248,13 @@ var modalContent = [
 
 <p><span><span><span><b>Schools should continue to develop knowledge on topics specified for primary as required and in addition cover the following content by the end of secondary: </b></span></span></span></p>
 
-<table class="MsoTableGrid" title="Schools should continue to develop knowledge on topics specified for primary as required and in addition cover the following content by the end of secondary: " style="width: 626px;">
+<table class="MsoTableGrid" title="Schools should continue to develop knowledge on topics specified for primary as required and in addition cover the following content by the end of secondary: " >
 	<tbody>
 		<tr>
-			<td valign="top" width="113">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span>Families</span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="510">
+			<td valign="top" >
 			<p><span><span><span>Pupils should know </span></span></span></p>
 
 			<ul>
@@ -267,10 +272,10 @@ var modalContent = [
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" width="113">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span>Respectful relationships, including friendships</span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="510">
+			<td valign="top" >
 			<p><span><span><span>Pupils should know </span></span></span></p>
 
 			<ul>
@@ -285,10 +290,10 @@ var modalContent = [
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" width="113">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span>Online and media </span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="510">
+			<td valign="top" >
 			<p><span><span><span>Pupils should know </span></span></span></p>
 
 			<ul>
@@ -304,10 +309,10 @@ var modalContent = [
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" width="113">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span>Being safe</span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="510">
+			<td valign="top" >
 			<p><span><span><span>Pupils should know </span></span></span></p>
 
 			<ul>
@@ -317,10 +322,10 @@ var modalContent = [
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" width="113">
+			<td valign="top" class="subhead">
 			<p><span><span><span><b><span>Intimate and sexual relationships, including sexual health</span></b></span></span></span></p>
 			</td>
-			<td valign="top" width="510">
+			<td valign="top" >
 			<p><span><span><span>Pupils should know </span></span></span></p>
 
 			<ul>
@@ -407,9 +412,14 @@ var dfePages = {
   questionsPage0: {
     name: 'questionsPage0',
     batch: 2,
-    dfeTarget: 'TARGET',
+    dfeTarget: 'subpage.2018-06-11.5296214505',
     formHTML: dfeFormQuestionsPage0,
     questions: [
+      {
+        speakoutName: 'q[91]',
+        type: 'textarea',
+        targetId: 'question.2018-06-11.6085874157-textareasubquestion'
+      },
     ]
   },
   questionsPage1: {
