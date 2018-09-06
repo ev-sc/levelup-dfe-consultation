@@ -306,7 +306,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
       `src="${uriBase}/${dfePages.consent.dfeTarget}/">` +
       '</iframe>').on('load', function(){
       /** Trigger UI changes, form actions and iframe updates */
-      console.log('DfE page loading after src change');
+      // console.log('DfE page loading after src change');
       questionBlocks.show();
       $(spinner).hide();
       nextBlock.show();
@@ -320,8 +320,8 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
     nextBlock.add(submitButton).click(function(e) {
       e.preventDefault();
       e.stopPropagation();
-      console.log(e.target);
-      console.log('next/submit clicked');
+      // console.log(e.target);
+      // console.log('next/submit clicked');
       /** Add pages in batch to queue */
       var pages = Object.values(dfePages).filter(function(page){return page.batch === activeBatch;});
 
@@ -330,8 +330,8 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
         && !batchesSubmitted.includes(activeBatch)
         && validate_form($(e.target).closest('form#survey-form')); // eslint-disable-line no-undef
 
-      console.log('will submit: ' + doSubmit);
-      console.log('active batch ' + activeBatch);
+      // console.log('will submit: ' + doSubmit);
+      // console.log('active batch ' + activeBatch);
 
       if (doSubmit) {
         var iframe = $('#dfe');
@@ -346,11 +346,11 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
             if (submitting === false) {
               submitting = true;
               clearInterval(waitOnIframe);
-              console.log('cleared interval...');
+              // console.log('cleared interval...');
 
               /** Load data into hidden form */
               loadDataIntoForm(page.questions);
-              console.log('loaded data into forms...');
+              // console.log('loaded data into forms...');
 
               /** Setup submission */
               iframe.off();
@@ -390,7 +390,7 @@ value="https://consult.education.gov.uk/pshe/relationships-education-rse-health-
               $('#dfe').attr('src', `${uriBase}/${page.dfeTarget}`);
 
             } else {
-              console.log('still submitting...');
+              // console.log('still submitting...');
             }
           }, 300 + idx);
         });
